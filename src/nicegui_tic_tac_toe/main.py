@@ -6,8 +6,8 @@ from nicegui import ui
 class Field(ui.element):
     def __init__(self, click, index: int):
         super().__init__("div")
-        self.click = click  # buttonのクリック用
-        self.index = index  # buttonの番号
+        self.click = click  # ボタンのクリック用
+        self.index = index  # ボタンの番号
 
     def build(self, value: t.Literal["X", "O", ""]):
         self.clear()  # 子要素をクリア
@@ -19,7 +19,7 @@ class Field(ui.element):
                 color = "red" if self.value == "X" else "indigo-4"
                 self.icon = ui.icon(name, size="3em", color=color).classes("size-10")
             else:
-                self.button = ui.button(str(self.index), on_click=self.click).classes("rounded-xl size-10 bg-cyan-2")
+                ui.button(str(self.index), on_click=self.click).classes("rounded-xl size-10 bg-cyan-2")
 
 
 class Main:
@@ -32,8 +32,7 @@ class Main:
                 for i in range(3):
                     with ui.row():
                         self.fields.extend([Field(self.click, i * 3 + j) for j in range(3)])
-            with ui.row():
-                ui.button("reset", icon="refresh", on_click=self.reset).props("flat")
+            ui.button("reset", icon="refresh", on_click=self.reset).props("flat")
             self.reset()  # 画面の初期化
 
     def reset(self):
