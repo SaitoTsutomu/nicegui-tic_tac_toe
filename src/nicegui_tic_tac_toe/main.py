@@ -9,7 +9,7 @@ class Field(ui.element):
         self.click = click  # ボタンのクリック用
         self.index = index  # ボタンの番号
 
-    def build(self, value: t.Literal["X", "O", ""]):
+    def build(self, value: t.Literal["X", "O", ""]) -> None:
         self.clear()  # 子要素をクリア
         self.value = value
         with self:
@@ -26,7 +26,7 @@ class Main:
     def __init__(self):
         with ui.column().style("margin: 0 auto"):
             self.fields = []  # 9つのFieldのリスト
-            # メッセージ(self.messageにバインド)
+            # self.messageにバインドするメッセージ
             ui.label("").bind_text(self, "message").classes("text-4xl")
             with ui.card().classes("bg-cyan-1"):
                 for i in range(3):
@@ -35,19 +35,19 @@ class Main:
             ui.button("reset", icon="refresh", on_click=self.reset).props("flat")
             self.reset()  # 画面の初期化
 
-    def reset(self):
+    def reset(self) -> None:
         self.player: t.Literal["X", "O", ""] = "X"
         self.message = f"{self.player}'s turn"
         for field in self.fields:
             field.build("")  # Fieldの再作成
 
-    def click(self, event):
+    def click(self, event) -> None:
         if "won" not in self.message:
             self.fields[int(event.sender.text)].build(self.player)
             self.player = "X" if self.player == "O" else "O"
             self.set_message()
 
-    def set_message(self):
+    def set_message(self) -> None:
         for combination in [{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}]:
             values = "".join(self.fields[i].value for i in combination)
             if values in {"OOO", "XXX"}:
