@@ -1,6 +1,6 @@
 from typing import Literal
 
-from nicegui import ui
+from nicegui import elements, ui
 
 type State = Literal["X", "O", ""]  # マスの状態または手番
 
@@ -13,6 +13,7 @@ class Square(ui.element):
         self.click = click  # ボタンのクリック用
         self.button_text = str(index)  # ボタンの番号
         self.value: State = ""  # マスの値
+        self.icon: elements.icon | None = None
 
     def build(self, value: State) -> None:
         """GUI作成"""
@@ -68,8 +69,9 @@ class Game:
             if values in {"OOO", "XXX"}:
                 self.message = f"{values[0]} has won!"
                 for i in range(9):
-                    if i not in target and hasattr(self.squares[i], "icon"):
-                        self.squares[i].icon.classes("opacity-20")  # 揃ってないアイコンを薄くする
+                    square = self.squares[i].icon
+                    if i not in target and square is not None:
+                        square.classes("opacity-20")  # 揃ってないアイコンを薄くする
                 break
         else:
             if all(square.value for square in self.squares):
