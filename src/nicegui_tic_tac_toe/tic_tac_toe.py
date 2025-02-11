@@ -1,6 +1,9 @@
+"""tic-tac-toe"""
+
+from collections.abc import Callable
 from typing import Literal
 
-from nicegui import elements, ui
+from nicegui import elements, events, ui
 
 type State = Literal["X", "O", ""]  # マスの状態または手番
 
@@ -8,7 +11,8 @@ type State = Literal["X", "O", ""]  # マスの状態または手番
 class Square(ui.element):
     """GUI部品としてのマス"""
 
-    def __init__(self, click, index: int):
+    def __init__(self, click: Callable, index: int) -> None:
+        """初期化"""
         super().__init__("div")
         self.click = click  # ボタンのクリック用
         self.button_text = str(index)  # ボタンの番号
@@ -36,7 +40,8 @@ class Game:
     squares: list[Square]  # 9つのマス
     message: str = ""  # 手番や勝敗の表示
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """GUI初期化"""
         with ui.column().style("margin: 0 auto"):
             self.squares = []  # 9つのSquareのリスト
             # self.messageにバインドするメッセージ
@@ -55,7 +60,7 @@ class Game:
         for square in self.squares:
             square.build("")  # Squareの再作成
 
-    def click(self, event) -> None:
+    def click(self, event: events.ClickEventArguments) -> None:
         """マスのクリック"""
         if "won" not in self.message:
             self.squares[int(event.sender.text)].build(self.player)
@@ -80,6 +85,7 @@ class Game:
                 self.message = f"{self.player}'s turn"
 
 
-def main(*, reload=False, port=8101):
+def main(*, reload: bool = False, port: int = 8101) -> None:
+    """ゲーム実行"""
     Game()
     ui.run(title="TicTacToe", reload=reload, port=port)

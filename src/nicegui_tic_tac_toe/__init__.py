@@ -1,3 +1,5 @@
+"""nicegui_tic_tac_toe"""
+
 from importlib.metadata import metadata
 
 from .tic_tac_toe import Game, main

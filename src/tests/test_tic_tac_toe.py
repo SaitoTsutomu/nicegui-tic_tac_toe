@@ -1,4 +1,6 @@
+"""テスト"""
 # flake8: noqa: S101
+
 from unittest.mock import Mock
 
 import pytest
@@ -13,7 +15,7 @@ from nicegui_tic_tac_toe import Game
         ([*"012473586"], ["X's", "O's"] * 4 + ["dra"], "OXOXXOOOX"),
     ],
 )
-def test_tic_tac_toe(texts, messages, values):
+def test_tic_tac_toe(texts: list[str], messages: list[str], values: str) -> None:
     """終局のテスト"""
     ttt = Game()
     event = Mock()
