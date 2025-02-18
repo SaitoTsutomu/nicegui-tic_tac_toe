@@ -85,7 +85,7 @@ class Game:
                 self.message = f"{self.player}'s turn"
 
 
-def game(*, port: int | None = None) -> None:
+def run_game(*, port: int | None = None) -> None:
     """ゲーム実行"""
     Game()
     ui.run(title="TicTacToe", reload=False, port=port)
