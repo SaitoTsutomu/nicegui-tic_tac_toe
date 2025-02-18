@@ -2,7 +2,7 @@
 
 from importlib.metadata import metadata
 
-from fire import Fire as _Fire
+import fire
 
 from .tic_tac_toe import Game, game
 
@@ -15,4 +15,4 @@ __all__ = ["Game", "__author__", "__version__", "game"]
 
 def main() -> None:
     """スクリプト実行"""
-    _Fire(game)
+    fire.Fire(game)
